@@ -13,7 +13,7 @@ from time import time
 
 
 #importing the texture
-filename = 'texture4.jpg'
+filename = './datasets/texture4.jpg'
 camera = io.imread(filename,as_grey=True).astype(np.float32)
 x=camera.shape[0]
 y=camera.shape[1]
