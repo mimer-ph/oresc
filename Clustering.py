@@ -1,34 +1,28 @@
-import os
-import skimage
-import sklearn
-import cv2
+# KMeans clustering
+#
+
+
+#import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
 from skimage import io
-from skimage.segmentation import felzenszwalb, slic, quickshift
-from skimage.segmentation import mark_boundaries
-from skimage.util import img_as_float
-
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.utils import shuffle
-from sklearn.feature_extraction import image
-from sklearn.cluster import DBSCAN
-from sklearn.cluster import MeanShift, estimate_bandwidth
-
 from time import time
 
 
-
+#importing the texture
 filename = 'texture4.jpg'
 camera = io.imread(filename,as_grey=True).astype(np.float32)
 x=camera.shape[0]
 y=camera.shape[1]
 
-
+# displaying it
 plt.figure() 
 plt.imshow(camera) 
 
+# Setting the clustering settings
 n_colors=4
 
 
@@ -44,17 +38,16 @@ labels = kmeans.fit(X)
 print("done in %0.3fs." % (time() - t0))
 #
 
+# Display the labels
 values = kmeans.cluster_centers_.squeeze()
 labels = kmeans.labels_
 camerapic = np.choose(labels, values)
 camerapic.shape = camera.shape
+
+# not needed : morphological closure
 #kernel = np.ones((5,5),np.uint8)
 #camerapic = cv2.morphologyEx(camerapic, cv2.MORPH_CLOSE, kernel)
 
 plt.figure() 
 plt.imshow(camerapic,interpolation='none')
-
-#
-#segments_fz = felzenszwalb(camera, scale=1000, sigma=0.5, min_size=5)
-#plt.figure() 
-#plt.imshow(segments_fz,interpolation='none')
+# alt: matshow
